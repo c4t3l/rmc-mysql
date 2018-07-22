@@ -1,9 +1,11 @@
+{% from 'mysql/map.jinja' import mysql with context %}
+
 include:
   - mysql.restart
 
 'mysql server config':
   file.managed:
-    - name: /etc/my.cnf.d/server.cnf
-    - source: salt://mysql/files/server.cnf
+    - name: {{ mysql.server_conf }}
+    - source: {{ mysql.server_conf_source }}
     - require:
-      - pkg: mariadb-server
+      - pkg: {{ mysql.server }}
